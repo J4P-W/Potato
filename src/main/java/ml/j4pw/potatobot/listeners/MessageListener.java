@@ -9,7 +9,7 @@ public class MessageListener implements MessageCreateListener {
 
   @Override
   public void onMessageCreate(MessageCreateEvent messageCreateEvent) {
-    if (messageCreateEvent.getMessageContent().startsWith("p!")) {
+    if (messageCreateEvent.getMessageContent().startsWith("p!")) { // Sends the event to the command client
       commandClient.executeCommand(messageCreateEvent);
     }
   }
