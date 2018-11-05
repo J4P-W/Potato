@@ -12,7 +12,6 @@ import main.App;
 
 public class MessageSent implements MessageCreateListener {
 
-	@Override
 	public void onMessageCreate(MessageCreateEvent event) {
 		Message m = event.getMessage();
 		String content = m.getContent();
@@ -20,19 +19,27 @@ public class MessageSent implements MessageCreateListener {
 		MessageAuthor a = m.getAuthor();
 		//String[] args = content.split(" ");
 		Server s = event.getServer().get();
-		if(content.equalsIgnoreCase("j!ping"))
-			Cmds1.ping(c);
-		else if(content.startsWith("j!audit")) {
-			Cmds1.audit(event);
-		}
-		else if(isAdmin(a.getIdAsString())) {
-			if(content.equalsIgnoreCase("j!kill"))
-				Cmds1.kill(c);
-			
-		}
-		else if(a.canCreateChannelsOnServer()) {
-			if(content.startsWith("j!setaudit"))
-				Cmds1.setAudit(s, c, m);
+		System.out.println(content.startsWith("j!setaudit") + " " + !a.asUser().get().isBot());
+		
+		try {
+			if(!a.asUser().get().isBot()) {
+				if(content.equalsIgnoreCase("j!ping")) {
+					Cmds1.ping(c);
+				}
+				else if(content.startsWith("j!audit")) {
+					Cmds1.audit(event);
+				}
+				else if(isAdmin(a.getIdAsString())) {
+					if(content.equalsIgnoreCase("j!kill"))
+						Cmds1.kill(c);	
+				}
+				else if(content.startsWith("j!setaudit")) {
+					Cmds1.setAudit(s, c, m);
+				}
+			}
+		} catch(Exception e) {
+			c.sendMessage("An Error Occurred! https://discord.gg/R2DxPmD Tech Support");
+			e.printStackTrace();
 		}
 	}
 	public boolean isAdmin(String s) {
