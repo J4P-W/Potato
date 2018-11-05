@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'Potato-Bot'
+rootProject.name = 'J4P&W'
