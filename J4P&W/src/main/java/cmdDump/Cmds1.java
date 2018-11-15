@@ -8,9 +8,9 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.event.message.MessageCreateEvent;
 
-import api.classes.Alliance;
-import api.classes.City;
-import api.classes.Nation;
+import DevPaw.api.classes.Alliance;
+import DevPaw.api.classes.City;
+import DevPaw.api.classes.Nation;
 import pawstuff.CityLayout;
 import utils.AuditData;
 
@@ -18,10 +18,10 @@ import utils.AuditData;
 public class Cmds1 {
 	public static void setAudit(Server s, TextChannel c, Message m) {
 		try {
-			System.out.println("Hello?");
 			String json = new String(m.getAttachments().get(0).downloadAsByteArray().get());
-			System.out.println(json);
 			CityLayout cl = CityLayout.getCityLayout(json);
+			if(AuditData.data.containsKey(s.getIdAsString()))
+				AuditData.data.remove(s.getIdAsString());
 			AuditData.data.put(s.getIdAsString(), cl);
 			c.sendMessage("Audit sucessfully updated!");
 		} catch (Exception e) {
@@ -38,7 +38,6 @@ public class Cmds1 {
 		c.deleteMessages(a).join();
 		c.sendMessage("```Pong! " + (end - start) + "ms```");
 	}
-	
 	public static void kill(TextChannel c) {
 		c.sendMessage("```diff\n- Good bye cruel world ;(```");
 		System.exit(0);

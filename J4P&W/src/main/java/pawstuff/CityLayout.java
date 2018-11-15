@@ -1,10 +1,18 @@
 package pawstuff;
 
+import java.io.Serializable;
+
 import com.google.gson.Gson;
 
-import api.classes.City;
+import DevPaw.api.classes.City;
 
-public class CityLayout {
+
+
+public class CityLayout  implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2306489760170426392L;
 	public int infraNeeded;
 	public int impTotal;
 	public int impCoalpower;
@@ -38,20 +46,20 @@ public class CityLayout {
 		return new Gson().fromJson(json, CityLayout.class);
 	}
 	
-	public boolean audit(City c) {
-	    return infraNeeded == Integer.parseInt(c.infrastructure) && impCoalpower == Integer.parseInt(c.imp_coalpower)
-	      && impOilpower == Integer.parseInt(c.imp_oilpower) && impWindpower == Integer.parseInt(c.imp_windpower)
-	      && impNuclearpower == Integer.parseInt(c.imp_nuclearpower) && impCoalmine == Integer.parseInt(c.imp_coalmine)
-	      && impOilwell == Integer.parseInt(c.imp_oilwell) && impUramine == Integer.parseInt(c.imp_uramine)
-	      && impLeadmine == Integer.parseInt(c.imp_leadmine) && impIronmine == Integer.parseInt(c.imp_ironmine)
-	      && impBauxitemine == Integer.parseInt(c.imp_bauxitemine) && impFarm == Integer.parseInt(c.imp_farm) 
-	      && impGasrefinery == Integer.parseInt(c.imp_gasrefinery) && impAluminumrefinery == Integer.parseInt(c.imp_aluminumrefinery)
-	      && impMunitionsfactory == Integer.parseInt(c.imp_munitionsfactory) && impSteelmill == Integer.parseInt(c.imp_steelmill)
-	      && impPolicestation == Integer.parseInt(c.imp_policestation) && impHospital == Integer.parseInt(c.imp_hospital)
-	      && impRecyclingcenter == Integer.parseInt(c.imp_recyclingcenter) && impSubway == Integer.parseInt(c.imp_subway)
-	      && impSupermarket == Integer.parseInt(c.imp_supermarket) && impBank == Integer.parseInt(c.imp_bank)
-	      && impMall == Integer.parseInt(c.imp_mall) && impStadium == Integer.parseInt(c.imp_stadium)
-	      && impBarracks == Integer.parseInt(c.imp_barracks) && impFactory == Integer.parseInt(c.imp_factory)
-	      && impHangars == Integer.parseInt(c.imp_hangar) && impDrydock == Integer.parseInt(c.imp_drydock);
+	public boolean audit(City city) {
+	    return infraNeeded == Integer.parseInt(city.infrastructure) && impCoalpower == Integer.parseInt(city.imp_coalpower)
+	      && impOilpower == Integer.parseInt(city.imp_oilpower) && impWindpower == Integer.parseInt(city.imp_windpower)
+	      && impNuclearpower == Integer.parseInt(city.imp_nuclearpower) && impCoalmine == Integer.parseInt(city.imp_coalmine)
+	      && impOilwell == Integer.parseInt(city.imp_oilwell) && impUramine == Integer.parseInt(city.imp_uramine)
+	      && impLeadmine == Integer.parseInt(city.imp_leadmine) && impIronmine == Integer.parseInt(city.imp_ironmine)
+	      && impBauxitemine == Integer.parseInt(city.imp_bauxitemine) && impFarm == Integer.parseInt(city.imp_farm) 
+	      && impGasrefinery == Integer.parseInt(city.imp_gasrefinery) && impAluminumrefinery == Integer.parseInt(city.imp_aluminumrefinery)
+	      && impMunitionsfactory == Integer.parseInt(city.imp_munitionsfactory) && impSteelmill == Integer.parseInt(city.imp_steelmill)
+	      && impPolicestation == Integer.parseInt(city.imp_policestation) && impHospital == Integer.parseInt(city.imp_hospital)
+	      && impRecyclingcenter == Integer.parseInt(city.imp_recyclingcenter) && impSubway == Integer.parseInt(city.imp_subway)
+	      && impSupermarket == Integer.parseInt(city.imp_supermarket) && impBank == Integer.parseInt(city.imp_bank)
+	      && impMall == Integer.parseInt(city.imp_mall) && impStadium == Integer.parseInt(city.imp_stadium)
+	      && impBarracks == Integer.parseInt(city.imp_barracks) && impFactory == Integer.parseInt(city.imp_factory)
+	      && impHangars == Integer.parseInt(city.imp_hangar) && impDrydock == Integer.parseInt(city.imp_drydock);
 	  }
 }

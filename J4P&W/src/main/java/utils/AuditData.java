@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import pawstuff.CityLayout;
 import utils.general.Saveable;
 
-public class AuditData extends Saveable {
+public class AuditData extends Saveable implements Serializable {
+	private static final long serialVersionUID = 3544862744397316322L;
 	public static HashMap<String, CityLayout> data; // Server id, Data
 	@SuppressWarnings("static-access")
 	public AuditData() {

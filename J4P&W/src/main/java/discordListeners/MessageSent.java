@@ -20,22 +20,29 @@ public class MessageSent implements MessageCreateListener {
 		//String[] args = content.split(" ");
 		Server s = event.getServer().get();
 		System.out.println(content.startsWith("j!setaudit") + " " + !a.asUser().get().isBot());
-		
 		try {
 			if(!a.asUser().get().isBot()) {
+				System.out.println("Hello");
 				if(content.equalsIgnoreCase("j!ping")) {
+					System.out.println("["+s.getIdAsString()+"]: Ping");
 					Cmds1.ping(c);
 				}
 				else if(content.startsWith("j!audit")) {
+					System.out.println("["+s.getIdAsString()+"]: Audit");
 					Cmds1.audit(event);
 				}
-				else if(isAdmin(a.getIdAsString())) {
-					if(content.equalsIgnoreCase("j!kill"))
-						Cmds1.kill(c);	
-				}
 				else if(content.startsWith("j!setaudit")) {
+					System.out.println("["+s.getIdAsString()+"]: SetAudit");
 					Cmds1.setAudit(s, c, m);
 				}
+				else if(isAdmin(a.getIdAsString())) {
+					System.out.println("["+s.getIdAsString()+"]: Admin");
+					if(content.equalsIgnoreCase("j!kill")) {
+						System.out.println("["+s.getIdAsString()+"]: Kill");
+						Cmds1.kill(c);	
+					}
+				}
+				
 			}
 		} catch(Exception e) {
 			c.sendMessage("An Error Occurred! https://discord.gg/R2DxPmD Tech Support");

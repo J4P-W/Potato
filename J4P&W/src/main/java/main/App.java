@@ -9,6 +9,7 @@ import org.javacord.api.listener.server.member.ServerMemberJoinListener;
 
 import discordListeners.MessageSent;
 import discordListeners.UserJoin;
+import utils.AuditData;
 
 
 public class App {
@@ -27,6 +28,7 @@ public class App {
 		api.addServerMemberJoinListener((ServerMemberJoinListener)new UserJoin());
 		api.updateActivity("----");
 		System.out.println(api.createBotInvite());
+		new AuditData();
 		System.out.println("Bot initialized");
 		s.close();
 	}
