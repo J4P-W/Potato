@@ -6,8 +6,7 @@ import org.javacord.api.listener.server.member.ServerMemberJoinListener;
 public class UserJoin implements ServerMemberJoinListener {
 
 	public void onServerMemberJoin(ServerMemberJoinEvent event) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

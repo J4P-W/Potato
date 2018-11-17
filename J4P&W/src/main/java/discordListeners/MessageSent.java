@@ -8,6 +8,7 @@ import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
 import cmdDump.Cmds1;
+import cmdDump.Cmds2;
 import main.App;
 
 public class MessageSent implements MessageCreateListener {
@@ -19,10 +20,8 @@ public class MessageSent implements MessageCreateListener {
 		MessageAuthor a = m.getAuthor();
 		//String[] args = content.split(" ");
 		Server s = event.getServer().get();
-		System.out.println(content.startsWith("j!setaudit") + " " + !a.asUser().get().isBot());
 		try {
 			if(!a.asUser().get().isBot()) {
-				System.out.println("Hello");
 				if(content.equalsIgnoreCase("j!ping")) {
 					System.out.println("["+s.getIdAsString()+"]: Ping");
 					Cmds1.ping(c);
@@ -31,21 +30,27 @@ public class MessageSent implements MessageCreateListener {
 					System.out.println("["+s.getIdAsString()+"]: Audit");
 					Cmds1.audit(event);
 				}
-				else if(content.startsWith("j!setaudit")) {
-					System.out.println("["+s.getIdAsString()+"]: SetAudit");
-					Cmds1.setAudit(s, c, m);
+				else if(content.startsWith("j!nation")) {
+					System.out.println("["+s.getIdAsString()+"]: Nation");
+					Cmds2.nationInfo(m);
+				}
+				else if(content.startsWith("j!alliance")) {
+					System.out.println("["+s.getIdAsString()+"]: Alliance");
+					Cmds2.allianceInfo(m);
+				}
+				else if(content.startsWith("j!tier")) {
+					System.out.println("["+s.getIdAsString()+"]: Tier");
+					Cmds2.tier(m);
 				}
 				else if(isAdmin(a.getIdAsString())) {
-					System.out.println("["+s.getIdAsString()+"]: Admin");
 					if(content.equalsIgnoreCase("j!kill")) {
 						System.out.println("["+s.getIdAsString()+"]: Kill");
 						Cmds1.kill(c);	
 					}
 				}
-				
 			}
 		} catch(Exception e) {
-			c.sendMessage("An Error Occurred! https://discord.gg/R2DxPmD Tech Support");
+			c.sendMessage("```An Error Occurred!``` https://discord.gg/R2DxPmD Tech Support");
 			e.printStackTrace();
 		}
 	}
