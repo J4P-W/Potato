@@ -2,8 +2,8 @@ package DevPaw.api.classes;
 
 import java.util.List;
 
-import DevPaw.api.PaWAPI;
 import DevPaw.api.util.ResourceGen;
+import main.App;
 
 
 
@@ -93,7 +93,7 @@ public class Nation {
 	    		if(!success)
 	    			return null;
 	    		int allianceID = Integer.parseInt(allianceid);
-	    		String color1 = PaWAPI.getAlliance(allianceID+"").color;
+	    		String color1 = App.mainapi.getAlliance(allianceID+"").color;
 	    		String color2 = color;
 	    		double boost = 1.0001;
 	    		if(color1.equalsIgnoreCase(color2))
@@ -112,7 +112,7 @@ public class Nation {
 	    		boolean hasMass = massirrigation.contains("1");
 	    		boolean hasUran = uraniumenrich.contains("1");
 	    		for(String ca:cities) {
-	    			City c = PaWAPI.getCity(ca);
+	    			City c = App.mainapi.getCity(ca);
 	    			rg.monet += (((725.0 * c.commerce/50.0) +725.0)*c.population/1000.0)*boost;
 	    			//System.out.println("Money: " + (((725.0 * getInteger("commerce",apiRaw)/50.0) +725.0)*getInteger("population",apiRaw)/1000.0)*boost);
 	    			//System.out.println(""+apiRaw);

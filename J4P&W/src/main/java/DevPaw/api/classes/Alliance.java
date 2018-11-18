@@ -3,7 +3,8 @@ package DevPaw.api.classes;
 import java.util.List;
 
 
-import DevPaw.api.PaWAPI;
+import DevPaw.api.exceptions.UnsuccessfullAPIException;
+import main.App;
 
 
 public class Alliance {
@@ -31,10 +32,10 @@ public class Alliance {
     public int nukes;
     public int treasures;
     
-    public Nation[] getNations() {
+    public Nation[] getNations() throws UnsuccessfullAPIException {
     	Nation[] nations = new Nation[member_id_list.size()];
     	for(int x = 0; x < nations.length; x++)
-    		nations[x] = PaWAPI.getNation(member_id_list.get(x)+"");
+    		nations[x] = App.mainapi.getNation(member_id_list.get(x)+"");
     	return nations;
     }
     

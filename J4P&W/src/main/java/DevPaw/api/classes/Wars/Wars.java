@@ -6,9 +6,9 @@ package DevPaw.api.classes.Wars;
 
 public class Wars
 {
-    public Wars[] wars;
+    public LWar[] wars;
 
-    public String success;
+    public boolean success;
     
     
 }

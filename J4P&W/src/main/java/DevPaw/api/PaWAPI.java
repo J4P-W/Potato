@@ -12,80 +12,75 @@ import DevPaw.api.classes.Alliances.Alliances;
 import DevPaw.api.classes.Nations.Nations;
 import DevPaw.api.classes.TradePrice.TradePrice;
 import DevPaw.api.classes.War.War;
+import DevPaw.api.classes.War.WarData;
 import DevPaw.api.classes.Wars.Wars;
-import DevPaw.utilities.SpeedUtils;
+import DevPaw.api.exceptions.UnsuccessfullAPIException;
+import DevPaw.utilities.DevReader;
 import utils.general.MaxMap;
 
 public class PaWAPI {
-	
-	public static MaxMap<Integer, Object> buffer;
-	
-	public static void setBufferSize(int buffersize) {
-		buffer = new MaxMap<Integer, Object>(buffersize);
+	private MaxMap<String, Object> buffer;
+	protected boolean reg;
+	private DevReader r;
+	public PaWAPI(DevReader r) {
+		buffer = new MaxMap<String, Object>(50);
+		reg = true;
+		this.r = r;
+	}
+	public PaWAPI(DevReader r, int buffersize) {
+		buffer = new MaxMap<String, Object>(buffersize);
+		reg = true;
+		this.r = r;
+	}
+	public void setToTest() {
+		reg = false;
+	}
+	public void setToReg() {
+		reg = true;
 	}
 	
-	public void store(Object o) {
-		buffer.put(/*o.getClass().getSimpleName()*/ 1,o);
-		System.out.println("Current Buffer size: "+buffer.size());
+	public void setBufferSize(int buffersize) {
+		buffer = new MaxMap<String, Object>(buffersize);
 	}
 	
-	public int getAPID(Object o) {
-		switch(o.getClass().getSimpleName()) {
-		case "War":
-			return 0;
-		case "City":
-			return 1;
-		case "Nation":
-			return 2;
-		case "Alliance":
-			return 3;
-		case "AllianceMembers":
-			return 4;
-		case "Wars":
-			return 5;
-		case "Nations":
-			return 6;
-		case "Alliances":
-			return 7;
-		case "Military":
-			return 8;
-		case "TradePrice":
-			return 9;
-			
+	public void store(String url,Object o) {
+		buffer.put(url,o);
+	}
+	protected Gson gson = new Gson();
+	protected <C> Object getAPI(String url, Class<C> c) {
+		Object o;
+		if(!buffer.containsKey(url)) {
+			o = gson.fromJson(r.speedURL((reg?"https://politicsandwar.com/api/":"https://test.politicsandwar.com/api/")+url), c);
+			store(url,o);
 		}
-		return -1;
+		else {
+			o = buffer.get(url);
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						Thread.sleep(100);
+						buffer.remove(url);
+						store(url, gson.fromJson(r.speedURL((reg?"https://politicsandwar.com/api/":"https://test.politicsandwar.com/api/")+url), c));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		return o;
 	}
-	
-	
-	public static War getWar(String id) { // 0
-		return new Gson().fromJson(SpeedUtils.speedURL("https://politicsandwar.com/api/war/"+id), War.class);
+	public boolean inBuffer(String url) {
+		return buffer.containsKey((reg?"https://politicsandwar.com/api/":"https://test.politicsandwar.com/api/")+url);
 	}
-	public static City getCity(String id) { // 1
-    	return new Gson().fromJson(SpeedUtils.speedURL("https://politicsandwar.com/api/city/id="+id), City.class);
-    }
-	public static Nation getNation(String id) { // 2
-    	return new Gson().fromJson(SpeedUtils.speedURL("https://politicsandwar.com/api/nation/id="+id), Nation.class);
-    }
-	public static Alliance getAlliance(String id) { // 3
-    	return new Gson().fromJson(SpeedUtils.speedURL("https://politicsandwar.com/api/alliance/id="+id), Alliance.class);
-    }
-	public static AllianceMembers getAllianceMembers(String id, String key) { // 4
-		return new Gson().fromJson(SpeedUtils.speedURL(String.format("http://politicsandwar.com/api/alliance-members/?allianceid=%s&key=%s",id,key)), AllianceMembers.class);
-	}
-	public static Wars getWars() { // 5
-    	return new Gson().fromJson(SpeedUtils.speedURL("http://politicsandwar.com/api/wars/"), Wars.class);
-    }
-	public static Nations getNations() { // 6
-    	return new Gson().fromJson(SpeedUtils.speedURL("https://politicsandwar.com/api/nations/"), Nations.class);
-    }
-	public static Alliances genAlliances() { // 7
-    	return new Gson().fromJson(SpeedUtils.speedURL("https://politicsandwar.com/api/alliances/"), Alliances.class);
-    }
-	public static Military getMilitary(String nationid) { // 8
-		return new Military(nationid);
-	}
-	public static TradePrice getTradePrice(String resource) { // 9
-		return new Gson().fromJson(SpeedUtils.speedURL("https://politicsandwar.com/api/tradeprice/resource="+(resource.toLowerCase())), TradePrice.class);
-	}
-	
+	public War getWar(String id) throws UnsuccessfullAPIException {War o =  (War) getAPI("war/"+id, War.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to War api for id="+id+" was unsuccessfull");}return o;}
+	public City getCity(String id) throws UnsuccessfullAPIException {City c = (City) getAPI("city/id="+id, City.class);if(!c.success) {throw new UnsuccessfullAPIException("Call to City api for id="+id+" was unsuccessfull");}return c;}
+	public Nation getNation(String id) throws UnsuccessfullAPIException {Nation o =  (Nation) getAPI("nation/id="+id, Nation.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Nation api for id="+id+" was unsuccessfull");}return o;}
+	public Alliance getAlliance(String id) throws UnsuccessfullAPIException {Alliance o =  (Alliance) getAPI("alliance/id="+id, Alliance.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Alliance api for id="+id+" was unsuccessfull");}return o;}
+	public AllianceMembers getAllianceMembers(String id, String key) throws UnsuccessfullAPIException {AllianceMembers o =  (AllianceMembers) getAPI(String.format("alliance-members/?allianceid=%s&key=%s",id,key), AllianceMembers.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to AllianceMembers api for id="+id+" was unsuccessfull");}return o;}
+	public Wars getWars() throws UnsuccessfullAPIException {Wars o =  (Wars) getAPI("wars/", Wars.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Wars api was unsuccessfull");}return o;}
+	public Nations getNations() throws UnsuccessfullAPIException {Nations o =  (Nations) getAPI("nations/", Nations.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Nations api was unsuccessfull");}return o;}
+	public Alliances getAlliances() throws UnsuccessfullAPIException {Alliances o =  (Alliances) getAPI("alliances/", Alliances.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Alliances api was unsuccessfull");}return o;}
+	public Military getMilitary(String nationid) throws UnsuccessfullAPIException {return new Military(nationid);}
+	public TradePrice getTradePrice(String resource) {return (TradePrice) getAPI("tradeprice/resource="+(resource.toLowerCase()), TradePrice.class);}
+	public WarData getWarData(String id) throws UnsuccessfullAPIException {War o =  (War) getAPI("war/"+id, War.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to War api for id="+id+" was unsuccessfull");}return o.war.get(0);}
 }

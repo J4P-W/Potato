@@ -1,9 +1,10 @@
 package DevPaw.api.classes;
 
-import DevPaw.api.PaWAPI;
+import DevPaw.api.exceptions.UnsuccessfullAPIException;
+import main.App;
 
 public class Military {
-	public Military(Nation n) {
+	public Military(Nation n) throws UnsuccessfullAPIException {
 		sold = Integer.parseInt(n.soldiers);
 		tank = Integer.parseInt(n.tanks);
 		jets = Integer.parseInt(n.aircraft);
@@ -13,7 +14,7 @@ public class Military {
 		nuke = Integer.parseInt(n.nukes);
 		String[] cities = n.cityids.toArray(new String[n.cities]);
 		for(String ca:cities) {
-			City c = PaWAPI.getCity(ca);
+			City c = App.mainapi.getCity(ca);
 			barr += Integer.parseInt(c.imp_barracks);
 			fact += Integer.parseInt(c.imp_factory);
 			hang += Integer.parseInt(c.imp_hangar);
@@ -27,8 +28,8 @@ public class Military {
 				
 		this.cities = cities.length;
 	}
-	public Military(String nid) {
-		Nation n = PaWAPI.getNation(nid);
+	public Military(String nid) throws UnsuccessfullAPIException {
+		Nation n = App.mainapi.getNation(nid);
 		sold = Integer.parseInt(n.soldiers);
 		tank = Integer.parseInt(n.tanks);
 		jets = Integer.parseInt(n.aircraft);
@@ -38,7 +39,7 @@ public class Military {
 		nuke = Integer.parseInt(n.nukes);
 		String[] cities = n.cityids.toArray(new String[n.cities]);
 		for(String ca:cities) {
-			City c = PaWAPI.getCity(ca);
+			City c = App.mainapi.getCity(ca);
 			barr += Integer.parseInt(c.imp_barracks);
 			fact += Integer.parseInt(c.imp_factory);
 			hang += Integer.parseInt(c.imp_hangar);

@@ -9,6 +9,8 @@ import org.javacord.api.listener.message.MessageCreateListener;
 
 import cmdDump.Cmds1;
 import cmdDump.Cmds2;
+import cmdDump.Cmds3;
+import cmdDump.CmdsPersistant;
 import main.App;
 
 public class MessageSent implements MessageCreateListener {
@@ -41,6 +43,22 @@ public class MessageSent implements MessageCreateListener {
 				else if(content.startsWith("j!tier")) {
 					System.out.println("["+s.getIdAsString()+"]: Tier");
 					Cmds2.tier(m);
+				}
+				else if(content.startsWith("j!market")) {
+					System.out.println("["+s.getIdAsString()+"]: Market");
+					Cmds3.market(m);
+				}
+				else if(content.startsWith("j!war")) {
+					System.out.println("["+s.getIdAsString()+"]: War");
+					Cmds3.War(m);
+				}
+				else if(content.startsWith("j!vm")) {
+					System.out.println("["+s.getIdAsString()+"]: Vaca");
+					Cmds3.vms(m);
+				}
+				else if(content.startsWith("j!defend")) {
+					System.out.println("["+s.getIdAsString()+"]: Defend");
+					CmdsPersistant.defensiveWarTracker(m);
 				}
 				else if(isAdmin(a.getIdAsString())) {
 					if(content.equalsIgnoreCase("j!kill")) {

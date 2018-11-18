@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import DevPaw.api.classes.Alliances.Alliances;
+import DevPaw.api.classes.Alliances.LAlliance;
+
 public class SpeedUtils { // Extremely fast and optimized code dumps, pure performance, best u don't try to read any of it after u put it here.
 
 	public static String speedURL(String url) { // Faster in general
@@ -46,6 +49,13 @@ public class SpeedUtils { // Extremely fast and optimized code dumps, pure perfo
 			sb.append(s.get(x)+" ,");
 		sb.append(s.get(s.size()-1)+" ]");
 		return sb.toString();
+	}
+	
+	public static String allianceNameToID(String name,Alliances a) {
+		for(LAlliance al:a.alliances)
+			if(al.name.contentEquals(name))
+				return al.id;
+		return "failed";
 	}
 
 }
