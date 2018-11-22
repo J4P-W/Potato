@@ -15,18 +15,25 @@ import main.App;
 import main.Init;
 
 public class CmdsPersistant {
+	public static void removeDefensive(Message m) {
+		if(Init.warExecutor.listeners.containsKey(m.getChannel().getIdAsString())) {
+			m.getChannel().sendMessage("removing...");
+		}
+		
+	}
+	
 	public static void defensiveWarTracker(Message m) {
 		TextChannel c = m.getChannel();
 		String[] args = m.getContent().split(" ");
 		if(!args[1].equalsIgnoreCase("all")) {
 			try {
 				App.mainapi.getAlliance(args[1]);
-				c.sendMessage("Tracking will begin now...");
 			} catch(UnsuccessfullAPIException error) {
 				ErrorResponses.APIException(c, error);
 				return;
 			} catch(ArrayIndexOutOfBoundsException error) {
 				ErrorResponses.invalidFormatException(c, error);
+				return;
 			}
 		}
 		

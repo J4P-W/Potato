@@ -99,7 +99,7 @@ public class PaWAPI {
 	public boolean inBuffer(String url) {
 		return buffer.containsKey((reg?"https://politicsandwar.com/api/":"https://test.politicsandwar.com/api/")+url);
 	}
-	public War getWar(String id) throws UnsuccessfullAPIException {War o =  (War) getAPI("war/"+id, War.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to War api for id="+id+" was unsuccessfull");}return o;}
+	public War getWar(String id) throws UnsuccessfullAPIException {War o = (War) getAPI("war/"+id, War.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to War api for id="+id+" was unsuccessfull");}return o;}
 	public City getCity(String id) throws UnsuccessfullAPIException {City c = (City) getAPI("city/id="+id, City.class);if(!c.success) {throw new UnsuccessfullAPIException("Call to City api for id="+id+" was unsuccessfull");}return c;}
 	public Nation getNation(String id) throws UnsuccessfullAPIException {Nation o =  (Nation) getAPI("nation/id="+id, Nation.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Nation api for id="+id+" was unsuccessfull");}return o;}
 	public Alliance getAlliance(String id) throws UnsuccessfullAPIException {Alliance o =  (Alliance) getAPI("alliance/id="+id, Alliance.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Alliance api for id="+id+" was unsuccessfull");}return o;}

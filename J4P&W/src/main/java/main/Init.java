@@ -11,8 +11,7 @@ public class Init {
 	public static void Initialize() throws UnsuccessfullAPIException {
 		warExecutor = new DevExecutor<LWar>(new ObjectSource<LWar>() {
 			@Override
-			public LWar[] getSource()  {
-				System.out.println("Sourceing");
+			public LWar[] getSource() {
 				Wars ws;
 				try {
 					ws = App.bigapis.getWars(2000);

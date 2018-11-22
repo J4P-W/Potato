@@ -1,6 +1,9 @@
 package main;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -11,11 +14,14 @@ import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.javacord.api.listener.server.member.ServerMemberJoinListener;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+
 import DevPaw.api.PaWAPI;
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
-import DevPaw.utilities.DevReader;
+import DevPaw.browserators.ConversationHandler;
+import DevPaw.browserators.MessageHandler;
+import DevPaw.browserators.exceptions.InvalidLoginException;
 import discordListeners.MessageSent;
-import discordListeners.UserJoin;
 
 
 public class App {
@@ -26,11 +32,13 @@ public class App {
 	public static PaWAPI mainapi;
 	public static PaWAPI tradeapi;
 	public static PaWAPI bigapis;
-	public static void main(String[] args) throws UnsuccessfullAPIException {
-		PrintStream p = new PrintStream(System.out) {
+	public static void main(String[] args) throws UnsuccessfullAPIException, FailingHttpStatusCodeException, MalformedURLException, IOException, InvalidLoginException, IndexOutOfBoundsException, ParseException {
+		MessageHandler mr = new MessageHandler("devan@cleverpath.com", "Uranium12", 4000);
+		ConversationHandler ch = new ConversationHandler(mr, 2273378);
+		/*PrintStream p = new PrintStream(System.out) {
 		    @Override
 		    public void println(String x) {
-		        super.printf("[%s]:\t%s\n",new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
+		        super.printf("[%s]:\t%s\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
 		    }
 		};
 		System.setOut(p);
@@ -63,6 +71,6 @@ public class App {
 			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("food")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("food");}}}).start();
 		} catch(Exception e) {}
 		System.out.println("Bot initialized");
-		s.close();
+		s.close();*/
 	}
 }
