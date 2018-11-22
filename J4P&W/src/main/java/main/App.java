@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
+import java.util.Scanner;
 
 import org.javacord.api.DiscordApi;
 
@@ -25,9 +26,12 @@ public class App {
 	public static PaWAPI tradeapi;
 	public static PaWAPI bigapis;
 	public static void main(String[] args) throws UnsuccessfullAPIException, FailingHttpStatusCodeException, MalformedURLException, IOException, InvalidLoginException, IndexOutOfBoundsException, ParseException {
-		MessageHandler mr = new MessageHandler("devan@cleverpath.com", "Uranium12", 4000);
-		ConversationHandler ch = new ConversationHandler(mr, 2273378);
+		Scanner s = new Scanner(System.in);
+		System.out.print("Kek: ");
+		MessageHandler mr = new MessageHandler("devan@cleverpath.com", s.nextLine(), 4000);
+		ConversationHandler ch = new ConversationHandler(mr, mr.getAll().get(0).id);
 		System.out.println(ch.getConversation().get(0).date);
+		s.close();
 		
 		/*PrintStream p = new PrintStream(System.out) {
 		    @Override
