@@ -35,6 +35,8 @@ public class App {
 	public static void main(String[] args) throws UnsuccessfullAPIException, FailingHttpStatusCodeException, MalformedURLException, IOException, InvalidLoginException, IndexOutOfBoundsException, ParseException {
 		MessageHandler mr = new MessageHandler("devan@cleverpath.com", "Uranium12", 4000);
 		ConversationHandler ch = new ConversationHandler(mr, 2273378);
+		System.out.println(ch.getConversation().get(0).date);
+		
 		/*PrintStream p = new PrintStream(System.out) {
 		    @Override
 		    public void println(String x) {

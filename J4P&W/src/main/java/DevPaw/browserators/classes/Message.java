@@ -22,7 +22,6 @@ public class Message {
 		id = Integer.parseInt(StringUtils.substringBetween(htmlelement.getCell(2).asXml(),"<td>\r\n  <a href=\"https://politicsandwar.com/inbox/message/id=", "\">\r\n"));
 		if(htmlelement.getAttribute("class").contentEquals("bold"))
 			read = true;
-		System.out.println(htmlelement.getCell(3).asXml());
 		senderid = Integer.parseInt(StringUtils.substringBetween(htmlelement.getCell(3).asXml(),"<a href=\"https://politicsandwar.com/nation/id=","\" data-toggle=\"tooltip\" title=\"\" data-original-title=\""));
 	}
 }
