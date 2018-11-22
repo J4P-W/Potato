@@ -2,6 +2,7 @@ package main;
 
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -22,9 +23,9 @@ public class App {
 	public static DiscordApi api;
 	public static MessageSent ms;
 	public static String[] administrators = {"358794817595113476", "245470898293833729"};
-	public static PaWAPI mainapi = new PaWAPI(new DevReader(System.out));
-	public static PaWAPI tradeapi = new PaWAPI(new DevReader(),15);
-	public static PaWAPI bigapis = new PaWAPI(new DevReader(), 4);
+	public static PaWAPI mainapi;
+	public static PaWAPI tradeapi;
+	public static PaWAPI bigapis;
 	public static void main(String[] args) throws UnsuccessfullAPIException {
 		PrintStream p = new PrintStream(System.out) {
 		    @Override
@@ -33,7 +34,11 @@ public class App {
 		    }
 		};
 		System.setOut(p);
-		System.out.println("yeet");
+		mainapi = new PaWAPI(100);
+		tradeapi = new PaWAPI(new DevReader(),15);
+		bigapis = new PaWAPI(new DevReader(),7);
+		bigapis.setTime(2, ChronoUnit.MINUTES);
+		mainapi.setTime(5, ChronoUnit.MINUTES);
 		Scanner s = new Scanner(System.in);
 		System.out.print("Enter bot token: ");
 		String token = s.nextLine();
@@ -44,17 +49,19 @@ public class App {
 		api.updateActivity("j!help");
 		System.out.println(api.createBotInvite());
 		Init.Initialize();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("coal")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("coal");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("oil")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("oil");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("uranium")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("uranium");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("lead")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("lead");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("iron")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("iron");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("bauxite")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("bauxite");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("gasoline")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("gasoline");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("munitions")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("munitions");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("steel")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("steel");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("aluminum")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("aluminum");}}}).start();
-		new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("food")) { try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();} tradeapi.getTradePrice("food");}}}).start();
+		try {
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("coal")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("coal");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("oil")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("oil");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("uranium")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("uranium");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("lead")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("lead");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("iron")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("iron");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("bauxite")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("bauxite");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("gasoline")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("gasoline");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("munitions")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("munitions");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("steel")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("steel");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("aluminum")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("aluminum");}}}).start();
+			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("food")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("food");}}}).start();
+		} catch(Exception e) {}
 		System.out.println("Bot initialized");
 		s.close();
 	}

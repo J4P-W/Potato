@@ -11,16 +11,22 @@ public class Init {
 	public static void Initialize() throws UnsuccessfullAPIException {
 		warExecutor = new DevExecutor<LWar>(new ObjectSource<LWar>() {
 			@Override
-			public LWar[] getSource() throws UnsuccessfullAPIException {
-				Wars ws = App.bigapis.getWars();
-				LWar[] warray = ws.wars;
-				return warray;
+			public LWar[] getSource()  {
+				System.out.println("Sourceing");
+				Wars ws;
+				try {
+					ws = App.bigapis.getWars(2000);
+					LWar[] warray = ws.wars;
+					return warray;
+				} catch (UnsuccessfullAPIException e) {
+					e.printStackTrace();
+				}
+				return null;
 			}
 			@Override
-			public boolean equals(LWar obj1, LWar obj2) {
-				return obj1.warID.contentEquals(obj2.warID);
+			public boolean equals(LWar a, LWar b) {
+				return a.warID.contentEquals(b.warID);
 			}
-		}, 1000);
-		
+		}, 120000);
 	}
 }

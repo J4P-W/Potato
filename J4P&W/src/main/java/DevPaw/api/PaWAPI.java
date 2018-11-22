@@ -1,6 +1,10 @@
 package DevPaw.api;
 
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+
 import com.google.gson.Gson;
 
 import DevPaw.api.classes.Alliance;
@@ -20,18 +24,49 @@ import utils.general.MaxMap;
 
 public class PaWAPI {
 	private MaxMap<String, Object> buffer;
+	private MaxMap<String, Instant> death;
 	protected boolean reg;
 	private DevReader r;
+	private TemporalUnit t;
+	private int value;
 	public PaWAPI(DevReader r) {
 		buffer = new MaxMap<String, Object>(50);
+		death = new MaxMap<String, Instant>(50);
 		reg = true;
 		this.r = r;
+		this.t = ChronoUnit.HOURS;
+		this.value = 1;
+	}
+	public PaWAPI() {
+		buffer = new MaxMap<String, Object>(50);
+		death = new MaxMap<String, Instant>(50);
+		reg = true;
+		this.r = new DevReader(System.out);
+		this.t = ChronoUnit.HOURS;
+		this.value = 1;
+	}
+	public PaWAPI(int buffersize) {
+		buffer = new MaxMap<String, Object>(buffersize);
+		death = new MaxMap<String, Instant>(buffersize);
+		reg = true;
+		this.r = new DevReader(System.out);
+		this.t = ChronoUnit.HOURS;
+		this.value = 1;
 	}
 	public PaWAPI(DevReader r, int buffersize) {
 		buffer = new MaxMap<String, Object>(buffersize);
+		death = new MaxMap<String, Instant>(buffersize);
 		reg = true;
 		this.r = r;
+		this.t = ChronoUnit.HOURS;
+		this.value = 1;
+		
 	}
+	public void setTime(int value, TemporalUnit t) {
+		this.t = t;
+		this.value = value;
+	}
+	
 	public void setToTest() {
 		reg = false;
 	}
@@ -39,33 +74,25 @@ public class PaWAPI {
 		reg = true;
 	}
 	
-	public void setBufferSize(int buffersize) {
-		buffer = new MaxMap<String, Object>(buffersize);
-	}
-	
 	public void store(String url,Object o) {
 		buffer.put(url,o);
+		death.put(url, Instant.now().plus(value, t));
 	}
 	protected Gson gson = new Gson();
-	protected <C> Object getAPI(String url, Class<C> c) {
+	protected synchronized <C> Object getAPI(String url, Class<C> c) {
 		Object o;
-		if(!buffer.containsKey(url)) {
+		if(!buffer.containsKey(url) || death.get(url).isBefore(Instant.now())) {
+			if(buffer.containsKey(url)) {
+				death.remove(url);
+				buffer.remove(url);
+				System.out.println("Timeout request!");
+			}
+			System.out.println("New API Request! " + url);
 			o = gson.fromJson(r.speedURL((reg?"https://politicsandwar.com/api/":"https://test.politicsandwar.com/api/")+url), c);
 			store(url,o);
 		}
 		else {
 			o = buffer.get(url);
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						Thread.sleep(100);
-						buffer.remove(url);
-						store(url, gson.fromJson(r.speedURL((reg?"https://politicsandwar.com/api/":"https://test.politicsandwar.com/api/")+url), c));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			});
 		}
 		return o;
 	}
@@ -77,6 +104,7 @@ public class PaWAPI {
 	public Nation getNation(String id) throws UnsuccessfullAPIException {Nation o =  (Nation) getAPI("nation/id="+id, Nation.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Nation api for id="+id+" was unsuccessfull");}return o;}
 	public Alliance getAlliance(String id) throws UnsuccessfullAPIException {Alliance o =  (Alliance) getAPI("alliance/id="+id, Alliance.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Alliance api for id="+id+" was unsuccessfull");}return o;}
 	public AllianceMembers getAllianceMembers(String id, String key) throws UnsuccessfullAPIException {AllianceMembers o =  (AllianceMembers) getAPI(String.format("alliance-members/?allianceid=%s&key=%s",id,key), AllianceMembers.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to AllianceMembers api for id="+id+" was unsuccessfull");}return o;}
+	public Wars getWars(int amount) throws UnsuccessfullAPIException {Wars o =  (Wars) getAPI("wars/"+amount, Wars.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Wars api was unsuccessfull");}return o;}
 	public Wars getWars() throws UnsuccessfullAPIException {Wars o =  (Wars) getAPI("wars/", Wars.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Wars api was unsuccessfull");}return o;}
 	public Nations getNations() throws UnsuccessfullAPIException {Nations o =  (Nations) getAPI("nations/", Nations.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Nations api was unsuccessfull");}return o;}
 	public Alliances getAlliances() throws UnsuccessfullAPIException {Alliances o =  (Alliances) getAPI("alliances/", Alliances.class);if(!o.success) {throw new UnsuccessfullAPIException("Call to Alliances api was unsuccessfull");}return o;}
