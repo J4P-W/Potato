@@ -1,4 +1,4 @@
-package DevPaw.browserators;
+package DevPaw.browserators.handlers;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

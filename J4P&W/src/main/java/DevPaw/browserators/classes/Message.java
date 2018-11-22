@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
 
+
 public class Message {
 	public boolean read;
 	public String subject;

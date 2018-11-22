@@ -16,7 +16,7 @@ import DevPaw.api.classes.City;
 import DevPaw.api.classes.Nation;
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
 import main.App;
-import pawstuff.CityLayout;
+import utils.miscellaneous.CityLayout;
 
 
 public class Cmds1 {

@@ -1,26 +1,18 @@
 package main;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.Scanner;
 
 import org.javacord.api.DiscordApi;
-import org.javacord.api.DiscordApiBuilder;
-import org.javacord.api.listener.message.MessageCreateListener;
-import org.javacord.api.listener.server.member.ServerMemberJoinListener;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 
 import DevPaw.api.PaWAPI;
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
-import DevPaw.browserators.ConversationHandler;
-import DevPaw.browserators.MessageHandler;
 import DevPaw.browserators.exceptions.InvalidLoginException;
+import DevPaw.browserators.handlers.ConversationHandler;
+import DevPaw.browserators.handlers.MessageHandler;
 import discordListeners.MessageSent;
 
 

@@ -1,4 +1,4 @@
-package DevPaw.browserators;
+package DevPaw.browserators.handlers;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -27,8 +27,9 @@ public class ConversationHandler {
 		while(i.hasNext()) {
 			DomElement d = i.next();
 			Iterator<DomElement> i2 = d.getChildElements().iterator();
-			System.out.println(i2.next().asXml());
-			conversation.add(new Reply(i2.next(), sdf.parse(StringUtils.substringBetween("<span class=\"bold\">\r\n    Date:\r\n  </span>", "<a href=\"https://politicsandwar.com/account/block="))));
+			String yeet = i2.next().asXml();
+			System.out.println(yeet);
+			conversation.add(new Reply(i2.next(), sdf.parse(StringUtils.substringBetween(yeet,"Date:\r\n  </span>\r\n", "\r\n</p>"))));
 		}
 	}
 	
