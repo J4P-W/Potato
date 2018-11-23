@@ -1,9 +1,11 @@
 package DevPaw.api.classes.Nations;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class Nations {
+public class Nations implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 	public boolean success;
     public List<LNation> nations;
     

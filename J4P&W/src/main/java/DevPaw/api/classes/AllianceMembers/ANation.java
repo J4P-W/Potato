@@ -1,9 +1,11 @@
 package DevPaw.api.classes.AllianceMembers;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ANation {
+public class ANation implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 
 	public int nationid;
 	public String nation;

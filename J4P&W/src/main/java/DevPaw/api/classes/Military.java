@@ -1,9 +1,12 @@
 package DevPaw.api.classes;
 
+import java.io.Serializable;
+
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
 import main.App;
 
-public class Military {
+public class Military implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 	public Military(Nation n) throws UnsuccessfullAPIException {
 		sold = Integer.parseInt(n.soldiers);
 		tank = Integer.parseInt(n.tanks);

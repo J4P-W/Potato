@@ -1,19 +1,37 @@
 package DevPaw.api.listeners;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import DevPaw.utilities.database.DatabaseManager;
 
 public class DevExecutor<O> {
 	public ObjectSource<O> objects;
 	public O[] old;
 	
 	public HashMap<String,DevListener<O>> listeners;
+	
 	public Thread listenerThread;
-	public DevExecutor(ObjectSource<O> source, long delay) {
+	public DatabaseManager<HashMap<String,DevListener<O>>> listendb;
+	
+	public DevExecutor(String name,ObjectSource<O> source, long delay) {
 		this.objects = source;
 		old = source.getSource();
-		listeners = new HashMap<String,DevListener<O>>();
+		try {
+			listendb = new DatabaseManager<HashMap<String,DevListener<O>>>(new File("Executors/"+name+".txt"));
+			if(listendb.test()) {
+				listeners = listendb.load();
+			}
+			else {
+				listeners = new HashMap<String,DevListener<O>>();
+				listendb.save(listeners);
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
 		new Thread(new Runnable() {
 			public void run() {
 				while(true) {

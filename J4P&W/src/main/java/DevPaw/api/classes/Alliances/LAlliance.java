@@ -1,9 +1,10 @@
 package DevPaw.api.classes.Alliances;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LAlliance
-{
+public class LAlliance implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
     public String id;
     public String founddate;
     public String name;

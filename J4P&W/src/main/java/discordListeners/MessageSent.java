@@ -60,6 +60,10 @@ public class MessageSent implements MessageCreateListener {
 					System.out.println("["+s.getIdAsString()+"]: Defend");
 					CmdsPersistant.defensiveWarTracker(m);
 				}
+				else if(content.startsWith("j!undefend") && a.isServerAdmin()) {
+					System.out.println("["+s.getIdAsString()+"]: Undefend");
+					CmdsPersistant.removeDefensive(m);
+				}
 				else if(isAdmin(a.getIdAsString())) {
 					if(content.equalsIgnoreCase("j!kill")) {
 						System.out.println("["+s.getIdAsString()+"]: Kill");

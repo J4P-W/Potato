@@ -1,6 +1,7 @@
 package DevPaw.api;
 
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
@@ -22,7 +23,8 @@ import DevPaw.api.exceptions.UnsuccessfullAPIException;
 import DevPaw.utilities.DevReader;
 import utils.general.MaxMap;
 
-public class PaWAPI {
+public class PaWAPI implements Serializable {
+	private static final long serialVersionUID = 7225535953181327957L;
 	private MaxMap<String, Object> buffer;
 	private MaxMap<String, Instant> death;
 	protected boolean reg;
@@ -78,7 +80,7 @@ public class PaWAPI {
 		buffer.put(url,o);
 		death.put(url, Instant.now().plus(value, t));
 	}
-	protected Gson gson = new Gson();
+	protected static Gson gson = new Gson();
 	protected synchronized <C> Object getAPI(String url, Class<C> c) {
 		Object o;
 		if(!buffer.containsKey(url) || death.get(url).isBefore(Instant.now())) {

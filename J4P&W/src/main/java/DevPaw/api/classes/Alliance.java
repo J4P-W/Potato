@@ -1,5 +1,6 @@
 package DevPaw.api.classes;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -7,7 +8,8 @@ import DevPaw.api.exceptions.UnsuccessfullAPIException;
 import main.App;
 
 
-public class Alliance {
+public class Alliance implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 	public boolean success;
     public String allianceid;
     public String name;

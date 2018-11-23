@@ -1,6 +1,8 @@
 package cmdDump;
 
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import org.javacord.api.entity.channel.TextChannel;
@@ -28,7 +30,7 @@ public class Cmds1 {
 		c.deleteMessages(a).join();
 		c.sendMessage("```Pong! " + (end - start) + "ms```");
 	}
-	public static void kill(TextChannel c) {
+	public static void kill(TextChannel c) throws FileNotFoundException, IOException {
 		c.sendMessage("```diff\n- Good bye cruel world ;(```");
 		System.exit(0);
 	}

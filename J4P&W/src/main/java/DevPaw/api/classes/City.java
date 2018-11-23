@@ -1,9 +1,9 @@
 package DevPaw.api.classes;
 
+import java.io.Serializable;
 
-
-
-public class City {
+public class City implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 	public boolean success;
     public String cityid;
     public String url;

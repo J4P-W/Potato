@@ -1,6 +1,9 @@
 package cmdDump;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
@@ -15,14 +18,20 @@ import main.App;
 import main.Init;
 
 public class CmdsPersistant {
-	public static void removeDefensive(Message m) {
+	public static void removeDefensive(Message m) throws FileNotFoundException, IOException, InterruptedException, ExecutionException {
 		if(Init.warExecutor.listeners.containsKey(m.getChannel().getIdAsString())) {
-			m.getChannel().sendMessage("removing...");
+			Message m2 = m.getChannel().sendMessage("removing...").get();
+			Init.warExecutor.listeners.remove(m.getChannel().getIdAsString());
+			Init.warExecutor.listendb.save(Init.warExecutor.listeners);
+			m2.edit("Removed!");
+		}
+		else {
+			m.getChannel().sendMessage("No defender found for this channel for that id");
 		}
 		
 	}
 	
-	public static void defensiveWarTracker(Message m) {
+	public static void defensiveWarTracker(Message m) throws FileNotFoundException, IOException {
 		TextChannel c = m.getChannel();
 		String[] args = m.getContent().split(" ");
 		if(!args[1].equalsIgnoreCase("all")) {
@@ -38,6 +47,7 @@ public class CmdsPersistant {
 		}
 		
 		Init.warExecutor.listeners.put(m.getChannel().getIdAsString(), new DevListener<LWar>() {
+			private static final long serialVersionUID = -882489753234470874L;
 			public String allianceid = m.getContent().split(" ")[1];
 			public String channelid = c.getIdAsString();
 			@Override
@@ -78,5 +88,6 @@ public class CmdsPersistant {
 			}
 		});
 		c.sendMessage("Tracking will start now!");
+		Init.warExecutor.listendb.save(Init.warExecutor.listeners);
 	}
 }

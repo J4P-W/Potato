@@ -1,6 +1,9 @@
 package DevPaw.api.classes.Nations;
 
-public class LNation {
+import java.io.Serializable;
+
+public class LNation implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 	public int nationid;
     public String nation;
     public String leader;

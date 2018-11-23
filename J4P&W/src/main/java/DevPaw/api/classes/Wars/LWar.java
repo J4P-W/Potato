@@ -1,6 +1,9 @@
 package DevPaw.api.classes.Wars;
 
-public class LWar {
+import java.io.Serializable;
+
+public class LWar implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 	public String war_type;
 
     public String defenderAA;

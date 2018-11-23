@@ -1,5 +1,6 @@
 package DevPaw.api.classes;
 
+import java.io.Serializable;
 import java.util.List;
 
 import DevPaw.api.util.ResourceGen;
@@ -8,7 +9,8 @@ import main.App;
 
 
 
-public class Nation {
+public class Nation implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 	    public List<String> cityids;
 	    public int cityprojecttimerturns;
 	    public boolean success;

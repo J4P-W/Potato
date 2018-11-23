@@ -1,10 +1,13 @@
 
 package DevPaw.api.classes.War;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class WarData {
+public class WarData implements Serializable {
+	private static final long serialVersionUID = 4824463550348651394L;
 
     @SerializedName("war_ended")
     @Expose
