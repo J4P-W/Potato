@@ -56,7 +56,7 @@ public class MessageSent implements MessageCreateListener {
 					System.out.println("["+s.getIdAsString()+"]: Vaca");
 					Cmds3.vms(m);
 				}
-				else if(content.startsWith("j!defend")) {
+				else if(content.startsWith("j!defend") && a.isServerAdmin()) {
 					System.out.println("["+s.getIdAsString()+"]: Defend");
 					CmdsPersistant.defensiveWarTracker(m);
 				}

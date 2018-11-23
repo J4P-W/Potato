@@ -1,20 +1,20 @@
 package main;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.text.ParseException;
+import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Scanner;
 
 import org.javacord.api.DiscordApi;
-
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import org.javacord.api.DiscordApiBuilder;
+import org.javacord.api.listener.message.MessageCreateListener;
+import org.javacord.api.listener.server.member.ServerMemberJoinListener;
 
 import DevPaw.api.PaWAPI;
-import DevPaw.api.exceptions.UnsuccessfullAPIException;
-import DevPaw.browserators.exceptions.InvalidLoginException;
-import DevPaw.browserators.handlers.ConversationHandler;
-import DevPaw.browserators.handlers.MessageHandler;
+import DevPaw.utilities.DevReader;
 import discordListeners.MessageSent;
+import discordListeners.UserJoin;
 
 
 public class App {
@@ -25,15 +25,8 @@ public class App {
 	public static PaWAPI mainapi;
 	public static PaWAPI tradeapi;
 	public static PaWAPI bigapis;
-	public static void main(String[] args) throws UnsuccessfullAPIException, FailingHttpStatusCodeException, MalformedURLException, IOException, InvalidLoginException, IndexOutOfBoundsException, ParseException {
-		Scanner s = new Scanner(System.in);
-		System.out.print("Kek: ");
-		MessageHandler mr = new MessageHandler("devan@cleverpath.com", s.nextLine(), 4000);
-		ConversationHandler ch = new ConversationHandler(mr, mr.getAll().get(0).id);
-		System.out.println(ch.getConversation().get(0).date);
-		s.close();
-		
-		/*PrintStream p = new PrintStream(System.out) {
+	public static void main(String[] args) {
+		PrintStream p = new PrintStream(System.out) {
 		    @Override
 		    public void println(String x) {
 		        super.printf("[%s]:\t%s\n", new SimpleDateFormat("hh:mm:ss a").format(new Date()),x);
@@ -69,6 +62,6 @@ public class App {
 			new Thread(new Runnable() {public void run() {while(!tradeapi.inBuffer("food")) { try {Thread.sleep(60000);} catch (Exception e) {} tradeapi.getTradePrice("food");}}}).start();
 		} catch(Exception e) {}
 		System.out.println("Bot initialized");
-		s.close();*/
+		s.close();
 	}
 }

@@ -21,7 +21,7 @@ public class Cmds3 {
 			Alliance a = App.mainapi.getAlliance(args[1]);
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setTitle("Vacation mode members in "+a.name);
-			embed.addField("Value: ", a.vmodemembers+"");
+			embed.addField("Value: ","```"+a.vmodemembers+"```");
 			c.sendMessage(embed);
 		} catch(UnsuccessfullAPIException error) {
 			ErrorResponses.APIException(c, error);

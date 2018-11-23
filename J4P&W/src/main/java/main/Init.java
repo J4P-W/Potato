@@ -8,7 +8,7 @@ import DevPaw.api.listeners.ObjectSource;
 
 public class Init {
 	public static DevExecutor<LWar> warExecutor;
-	public static void Initialize() throws UnsuccessfullAPIException {
+	public static void Initialize() {
 		warExecutor = new DevExecutor<LWar>(new ObjectSource<LWar>() {
 			@Override
 			public LWar[] getSource() {
