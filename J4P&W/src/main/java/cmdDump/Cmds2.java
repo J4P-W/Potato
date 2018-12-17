@@ -10,7 +10,6 @@ import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.emoji.Emoji;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
-import org.javacord.api.event.message.reaction.ReactionAddEvent;
 import org.javacord.api.listener.message.reaction.ReactionAddListener;
 
 import DevPaw.api.classes.Alliance;
@@ -29,7 +28,7 @@ public class Cmds2 {
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setColor(ColorFactory.valueOf(a.color));
 			embed.setTitle(a.name + " (" + a.acronym +")'s City tier count");
-			ArrayList<Integer> citycount = new ArrayList<Integer>();
+			ArrayList<Integer> citycount = new ArrayList<>();
 			int counter = 0;
 			for(int x = 0; x < a.member_id_list.size(); x++) {
 				Nation n = App.mainapi.getNation(a.member_id_list.get(x)+"");
@@ -45,6 +44,8 @@ public class Cmds2 {
 			ErrorResponses.APIException(m.getChannel(), error);
 		}
 	}
+	
+	private Cmds2() {}
 	
 	
 	public static void milit(Message m) throws InterruptedException, ExecutionException {
@@ -63,7 +64,8 @@ public class Cmds2 {
 				avg += milit.prep==-1?0:milit.prep;
 				total++;
 			}
-			avg /= total;
+			if(total != 0)
+				avg /= total;
 			char[] strn = new char[(int)(avg*10)];
 			for(int x = 0; x < strn.length; x++)
 				strn[x]= '=';
@@ -103,14 +105,12 @@ public class Cmds2 {
 			embed.setUrl("https://politicsandwar.com/alliance/id="+args[1]);
 			Message m2 = c.sendMessage("React with :boom: to check military (removes in 5 min)",embed).get();
 			m2.addReaction("\uD83D\uDCA5");
-			ReactionAddListener reactionator = new ReactionAddListener() {
-				public void onReactionAdd(ReactionAddEvent e) {
-					Emoji emoji = e.getReaction().get().getEmoji();
-					if(emoji.equalsEmoji("\uD83D\uDCA5") && e.getReaction().get().getCount() > 1) {
-						try {
-							milit(m);
-						} catch (Exception e1) {e1.printStackTrace();}
-					}
+			ReactionAddListener reactionator = e -> {
+				Emoji emoji = e.getReaction().get().getEmoji();
+				if(emoji.equalsEmoji("\uD83D\uDCA5") && e.getReaction().get().getCount() > 1) {
+					try {
+						milit(m);
+					} catch (Exception e1) {e1.printStackTrace();}
 				}
 			};
 			m2.addReactionAddListener(reactionator).removeAfter(5, TimeUnit.MINUTES);

@@ -1,8 +1,6 @@
 package cmdDump;
 
 import java.awt.Color;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import org.javacord.api.entity.channel.TextChannel;
@@ -23,6 +21,8 @@ import utils.miscellaneous.CityLayout;
 
 public class Cmds1 {
 	
+	private Cmds1() {}
+	
 	public static void ping(TextChannel c) {
 		long start = System.currentTimeMillis();
 		Message a = c.sendMessage("pinging...").join();
@@ -30,7 +30,7 @@ public class Cmds1 {
 		c.deleteMessages(a).join();
 		c.sendMessage("```Pong! " + (end - start) + "ms```");
 	}
-	public static void kill(TextChannel c) throws FileNotFoundException, IOException {
+	public static void kill(TextChannel c) {
 		c.sendMessage("```diff\n- Good bye cruel world ;(```");
 		System.exit(0);
 	}
@@ -49,7 +49,7 @@ public class Cmds1 {
 				c.sendMessage("```diff\n- Null Alliance ID: "+ args[1] +"```");
 				return;
 			}
-			
+			int counter = 0;
 			for(int nid: a.member_id_list) {
 				Nation n = App.mainapi.getNation(nid+"");
 				boolean audit = true;
@@ -57,6 +57,11 @@ public class Cmds1 {
 					City city = App.mainapi.getCity(cid);
 					audit = cl.audit(city);
 					if(!audit) {
+						if(counter++ > 10) {
+							c.sendMessage(embed);
+							counter = 0;
+							embed = new EmbedBuilder();
+						}
 						embed.addField("https://politicsandwar.com/api/nation/id="+nid, ":x: failed city inspection: https://politicsandwar.com/city/id="+cid);
 						failed = true;
 						break;
@@ -73,11 +78,7 @@ public class Cmds1 {
 			c.sendMessage(embed);
 		} catch(UnsuccessfullAPIException error) {
 			ErrorResponses.APIException(c, error);
-		} catch (JsonSyntaxException e1) {
-			ErrorResponses.ParseException(c, e1);
-		} catch (InterruptedException e1) {
-			ErrorResponses.ParseException(c, e1);
-		} catch (ExecutionException e1) {
+		} catch (JsonSyntaxException | InterruptedException | ExecutionException e1) {
 			ErrorResponses.ParseException(c, e1);
 		}
 	}

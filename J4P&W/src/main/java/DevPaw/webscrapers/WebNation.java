@@ -17,13 +17,11 @@ public class WebNation {
 	public WebNation(String id) {
 		url = "https://politicsandwar.com/nation/id="+id;
 		content = SpeedUtils.speedURL(url);
-		parsethread = new Thread(new Runnable() {
-			public void run() {
-				bounties = getbetween("<tr><td>Total Value of All Bounties:</td><td>", "</td></tr>");
-				warsWon = getbetween("<tr><td>Wars Won:</td><td>","</td></tr>");
-				warsLost = getbetween("<tr><td>Wars Lost:</td><td>","</td></tr>");
-				Description = getbetween("<p style=\"text-align:justify;\">","</p>");
-			}
+		parsethread = new Thread(() -> {
+			bounties = getbetween("<tr><td>Total Value of All Bounties:</td><td>", "</td></tr>");
+			warsWon = getbetween("<tr><td>Wars Won:</td><td>","</td></tr>");
+			warsLost = getbetween("<tr><td>Wars Lost:</td><td>","</td></tr>");
+			Description = getbetween("<p style=\"text-align:justify;\">","</p>");
 		});
 		parsethread.start();
 	}

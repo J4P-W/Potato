@@ -2,30 +2,27 @@ package DevPaw.api.util;
 
 
 public class ResourceGen {
-	public ResourceGen() {}
-	
-	public ResourceGen(double monet, double remonet, double coal, double oil, double iron, double baux, double steel,
-			double alum, double gaso, double uran, double lead, double munit, double food, int barr, int fact, int hang,
-			int dry) {
-		super();
-		this.monet = monet;
-		this.remonet = remonet;
-		this.coal = coal;
-		this.oil = oil;
-		this.iron = iron;
-		this.baux = baux;
-		this.steel = steel;
-		this.alum = alum;
-		this.gaso = gaso;
-		this.uran = uran;
-		this.lead = lead;
-		this.munit = munit;
-		this.food = food;
-		this.barr = barr;
-		this.fact = fact;
-		this.hang = hang;
-		this.dry = dry;
+	public void add(ResourceGen r) {
+		this.monet += r.monet;
+		this.remonet += r.remonet;
+		this.coal += r.coal;
+		this.oil += r.oil;
+		this.iron += r.iron;
+		this.baux += r.baux;
+		this.steel += r.steel;
+		this.alum += r.alum;
+		this.gaso += r.gaso;
+		this.uran += r.uran;
+		this.lead += r.lead;
+		this.munit += r.munit;
+		this.food += r.food;
+		this.barr += r.barr;
+		this.fact += r.fact;
+		this.hang += r.hang;
+		this.dry += r.dry;
 	}
+	
+	
 	public double monet = 0;
 	
 	public double test = 0;

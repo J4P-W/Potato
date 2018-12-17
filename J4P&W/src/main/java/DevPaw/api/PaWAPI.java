@@ -32,32 +32,32 @@ public class PaWAPI implements Serializable {
 	private TemporalUnit t;
 	private int value;
 	public PaWAPI(DevReader r) {
-		buffer = new MaxMap<String, Object>(50);
-		death = new MaxMap<String, Instant>(50);
+		buffer = new MaxMap<>(50);
+		death = new MaxMap<>(50);
 		reg = true;
 		this.r = r;
 		this.t = ChronoUnit.HOURS;
 		this.value = 1;
 	}
 	public PaWAPI() {
-		buffer = new MaxMap<String, Object>(50);
-		death = new MaxMap<String, Instant>(50);
+		buffer = new MaxMap<>(50);
+		death = new MaxMap<>(50);
 		reg = true;
 		this.r = new DevReader(System.out);
 		this.t = ChronoUnit.HOURS;
 		this.value = 1;
 	}
 	public PaWAPI(int buffersize) {
-		buffer = new MaxMap<String, Object>(buffersize);
-		death = new MaxMap<String, Instant>(buffersize);
+		buffer = new MaxMap<>(buffersize);
+		death = new MaxMap<>(buffersize);
 		reg = true;
 		this.r = new DevReader(System.out);
 		this.t = ChronoUnit.HOURS;
 		this.value = 1;
 	}
 	public PaWAPI(DevReader r, int buffersize) {
-		buffer = new MaxMap<String, Object>(buffersize);
-		death = new MaxMap<String, Instant>(buffersize);
+		buffer = new MaxMap<>(buffersize);
+		death = new MaxMap<>(buffersize);
 		reg = true;
 		this.r = r;
 		this.t = ChronoUnit.HOURS;

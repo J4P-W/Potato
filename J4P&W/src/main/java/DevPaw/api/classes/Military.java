@@ -15,8 +15,8 @@ public class Military implements Serializable {
 		
 		miss = Integer.parseInt(n.missiles);
 		nuke = Integer.parseInt(n.nukes);
-		String[] cities = n.cityids.toArray(new String[n.cities]);
-		for(String ca:cities) {
+		String[] ncities = n.cityids.toArray(new String[n.cities]);
+		for(String ca:ncities) {
 			City c = App.mainapi.getCity(ca);
 			barr += Integer.parseInt(c.imp_barracks);
 			fact += Integer.parseInt(c.imp_factory);
@@ -27,9 +27,9 @@ public class Military implements Serializable {
 		misp = n.missilelpad.equalsIgnoreCase("1");
 		nukp = n.nuclearresfac.equalsIgnoreCase("1");
 		score = Double.parseDouble(n.score);
-		prep = (sold/(barr*5000)+tank/(fact*250)+jets/(hang*18)+ship/(drys*5))/4;
+		prep = (sold/(barr*5000F)+tank/(fact*250F)+jets/(hang*18F)+ship/(drys*5.0F))/4F;
 				
-		this.cities = cities.length;
+		this.cities = ncities.length;
 	}
 	public Military(String nid) throws UnsuccessfullAPIException {
 		Nation n = App.mainapi.getNation(nid);
@@ -40,8 +40,8 @@ public class Military implements Serializable {
 		
 		miss = Integer.parseInt(n.missiles);
 		nuke = Integer.parseInt(n.nukes);
-		String[] cities = n.cityids.toArray(new String[n.cities]);
-		for(String ca:cities) {
+		String[] ncities = n.cityids.toArray(new String[n.cities]);
+		for(String ca:ncities) {
 			City c = App.mainapi.getCity(ca);
 			barr += Integer.parseInt(c.imp_barracks);
 			fact += Integer.parseInt(c.imp_factory);
@@ -54,7 +54,7 @@ public class Military implements Serializable {
 		score = Double.parseDouble(n.score);
 		prep = (sold/(barr*5000+Double.MIN_NORMAL)+tank/(fact*250+Double.MIN_NORMAL)+jets/(hang*18+Double.MIN_NORMAL)+ship/(drys*5+Double.MIN_NORMAL))/4;
 				
-		this.cities = cities.length;
+		this.cities = ncities.length;
 	}
 	public double prep;
 	

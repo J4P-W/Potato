@@ -20,4 +20,8 @@ public class LNation implements Serializable {
     public int rank;
     public String vacmode;
     public int minutessinceactive;
+    
+    public String getUrl() {
+    	return "https://politicsandwar.com/nation/id=" + nationid;
+    }
 }

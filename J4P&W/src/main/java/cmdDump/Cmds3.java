@@ -2,12 +2,14 @@ package cmdDump;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.List;
 
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
-import DevPaw.api.classes.Alliance;
+import DevPaw.api.classes.Nations.LNation;
+import DevPaw.api.classes.Nations.Nations;
 import DevPaw.api.classes.TradePrice.TradePrice;
 import DevPaw.api.classes.War.WarData;
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
@@ -15,21 +17,29 @@ import main.App;
 
 public class Cmds3 {
 	public static void vms(Message m) {
-		TextChannel c = m.getChannel();
-		String[] args = m.getContent().split(" ");
 		try {
-			Alliance a = App.mainapi.getAlliance(args[1]);
+			TextChannel c = m.getChannel();
+			String[] args = m.getContent().split(" ");
+			Nations n = App.bigapis.getNations();
+			List<LNation> ns = n.nations;
 			EmbedBuilder embed = new EmbedBuilder();
-			embed.setTitle("Vacation mode members in "+a.name);
-			embed.addField("Value: ","```"+a.vmodemembers+"```");
+			embed.setTitle("Vacation mode people");
+			embed.setColor(Color.BLACK);
+			for(int x = 0; x < ns.size(); x++) {
+				LNation ln = ns.get(x);
+				if(ln.allianceid == Integer.parseInt(args[1]) && !ln.vacmode.contentEquals("0")) {
+					embed.addField(ln.leader+"-", CmdsUtil.hyperUrl("https://politicsandwar.com/nation/id="+ln.nationid, ln.nationid+"#"));
+				}
+			}
 			c.sendMessage(embed);
-		} catch(UnsuccessfullAPIException error) {
-			ErrorResponses.APIException(c, error);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
+	private Cmds3() {}
 	
-	public static void War(Message m) {
+	public static void war(Message m) {
 		TextChannel c = m.getChannel();
 		String[] args = m.getContent().split(" ");
 		try {

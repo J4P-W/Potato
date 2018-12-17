@@ -3,7 +3,6 @@ package DevPaw.api.classes;
 import java.io.Serializable;
 import java.util.List;
 
-
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
 import main.App;
 
@@ -41,4 +40,7 @@ public class Alliance implements Serializable {
     	return nations;
     }
     
+    public static String getLink(String id) {
+    	return "https://politicsandwar.com/alliance/id="+id;
+    }
 }

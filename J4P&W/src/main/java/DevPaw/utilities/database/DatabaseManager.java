@@ -2,7 +2,6 @@ package DevPaw.utilities.database;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,13 +28,13 @@ public class DatabaseManager<T> {
 		}
 	}
 	
-	public void save(T save) throws FileNotFoundException, IOException {
+	public void save(T object) throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(destination));
-		oos.writeObject(save);
+		oos.writeObject(object);
 		oos.close();
 	}
 	@SuppressWarnings("unchecked")
-	public T load() throws FileNotFoundException, IOException, ClassNotFoundException {
+	public T load() throws IOException, ClassNotFoundException {
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(destination));
 		T obj = (T)ois.readObject();
 		ois.close();

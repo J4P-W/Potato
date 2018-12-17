@@ -1,6 +1,7 @@
 package DevPaw.browserators.builders;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
 import DevPaw.browserators.exceptions.CCLimitException;
@@ -13,13 +14,13 @@ public class MessageBuilder {
 	private String subject;
 	public MessageBuilder(int nationid) throws UnsuccessfullAPIException {
 		message = new StringBuilder();
-		CC = new ArrayList<String>();
+		CC = new ArrayList<>();
 		this.to = App.mainapi.getNation(nationid+"").leadername;
 	}
 	public MessageBuilder(String leadername) {
 		message = new StringBuilder();
 		this.to = leadername;
-		CC = new ArrayList<String>();
+		CC = new ArrayList<>();
 	}
 	public void addLeader(String leadername) throws CCLimitException {
 		if(CC.size() < 20)
@@ -33,7 +34,7 @@ public class MessageBuilder {
 	public String getTo() {
 		return to;
 	}
-	public ArrayList<String> getCC() {
+	public List<String> getCC() {
 		return CC;
 	}
 	public String getMessage() {

@@ -1,8 +1,8 @@
 package DevPaw.api.listeners;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface DevListener<O> extends Serializable {
-	public void execute(ArrayList<O> data);
+	public void execute(List<O> data);
 }

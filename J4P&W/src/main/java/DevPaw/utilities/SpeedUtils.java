@@ -29,7 +29,8 @@ public class SpeedUtils { // Extremely fast and optimized code dumps, pure perfo
         return null;
 	}
 
-
+	private SpeedUtils() {}
+	
 	public static <K, V> List<V> getAllKeysForValue(Map<K, V> mapOfWords, K key) {
 		List<V> listOfKeys = null;
 		if(mapOfWords.containsKey(key)) {

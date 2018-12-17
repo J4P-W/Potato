@@ -1,8 +1,7 @@
 package graphics;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,18 +29,10 @@ public class FirstPanel extends JPanel {
         setPreferredSize (new Dimension (192, 59));
         setLayout (null);
         //Add Listeners
-        jcomp3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					App.consolPanel();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-		        Init.Initialize(jcomp1.getText());
-			}
-        });
+        jcomp3.addActionListener(e -> {
+			App.consolPanel();
+		    Init.initialize(jcomp1.getText());
+		});
         
         //add components
         add (jcomp1);
