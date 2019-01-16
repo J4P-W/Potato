@@ -8,7 +8,7 @@ import cmdDump.ErrorResponses;
 import DevPaw.api.classes.Alliance;
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
 import DevPaw.api.util.ResourceGen;
-import main.App;
+import main.GenBot1;
 
 public class AllianceStuff {
 	
@@ -17,10 +17,10 @@ public class AllianceStuff {
 	public static void execute(Message m) {
 		try {
 			String[] args = m.getContent().split(" ");
-			Alliance a = App.mainapi.getAlliance(args[2]);
+			Alliance a = GenBot1.mainapi.getAlliance(args[2]);
 			ResourceGen rg = new ResourceGen();
 			for(Integer nid : a.member_id_list)
-				rg.add(App.mainapi.getNation(nid+"").getRevenue());
+				rg.add(GenBot1.mainapi.getNation(nid+"").getRevenue(GenBot1.mainapi));
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setTitle(a.name+"'s approximate revenue");
 			embed.setColor(ColorFactory.valueOf(a.color));

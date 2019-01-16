@@ -1,50 +1,57 @@
 package cmdDump.organized;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
 
 import org.beryx.awt.color.ColorFactory;
+import org.javacord.api.entity.channel.Channel;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 
 import cmdDump.CmdsUtil;
 import DevPaw.api.classes.Alliance;
-import DevPaw.api.classes.Nations.LNation;
-import DevPaw.api.listeners.DevListener;
+import main.GenBot1;
 import main.Init;
 
 public class WarStuff {
 
-	public static void beiger(Message m) throws IOException {
+	public static void beiger(Message m) throws Exception {
 		TextChannel c = m.getChannel();
 		String[] args = m.getContent().split(" ");
-		Init.beigeExecutor.listeners.put(c.getIdAsString(), new DevListener<LNation>() {
-			private static final long serialVersionUID = 4009770055504984598L;
-			@Override
-			public void execute(List<LNation> data) {
-				for(LNation n : data)
-					if(n.allianceid == Integer.parseInt(args[1])) {
-						EmbedBuilder embed = new EmbedBuilder();
-						embed.setTitle("New Beige!");
-						embed.setColor(ColorFactory.valueOf("beige"));
-						embed.addField(CmdsUtil.hyperUrl("Nation", n.getUrl()), CmdsUtil.hyperUrl("Alliance", Alliance.getLink(n.allianceid+"")));
-					}
+		int integer = -1;
+		if(!args[1].equals("all"))
+			try {
+				integer = Integer.parseInt(args[1]);
+				if(GenBot1.mainapi.getAlliance(args[1]).success)
+					throw new NumberFormatException("");
+			} catch(NumberFormatException exception) {
+				c.sendMessage("Invalid ID");
+				return;
 			}
-		});
-		Init.beigeExecutor.listendb.save(Init.beigeExecutor.listeners);
+		final String channel = c.getIdAsString();
+		final int inte = integer;
+		Init.beigeExecutor.addConsumer(channel, list ->
+			list.stream().filter(n -> args[1].equals("all") || n.allianceid==inte).forEach(n -> {
+				EmbedBuilder embed = new EmbedBuilder();
+				embed.setTitle("New Beige!");
+				embed.setColor(ColorFactory.valueOf("beige"));
+				embed.addField(CmdsUtil.hyperUrl("Nation", n.getUrl()), CmdsUtil.hyperUrl("Alliance", Alliance.getLink(n.allianceid)));
+				embed.setTimestampToNow();
+				Optional<Channel> o = GenBot1.api.getChannelById(channel);
+				if(o.isPresent() && o.get() instanceof TextChannel)
+					((TextChannel)o.get()).sendMessage(embed);
+				else
+					Init.beigeExecutor.removeConsumer(channel);
+			})
+		);
 		c.sendMessage("Tracking will start now!");
 	}
 	
-	public static void removeBeiger(Message m) throws IOException {
-		if (Init.beigeExecutor.listeners.containsKey(m.getChannel().getIdAsString())) {
-			Init.beigeExecutor.listeners.remove(m.getChannel().getIdAsString());
-			Init.beigeExecutor.listendb.save(Init.beigeExecutor.listeners);
+	public static void removeBeiger(Message m) {
+		if (Init.beigeExecutor.removeConsumer(m.getChannel().getIdAsString()))
 			m.getChannel().sendMessage("Removed!");
-		} else {
+		else
 			m.getChannel().sendMessage("No Beige Tracker found for this channel for that id");
-		}
-
 	}
 
 	private WarStuff() {}

@@ -15,7 +15,7 @@ import DevPaw.api.classes.Alliance;
 import DevPaw.api.classes.City;
 import DevPaw.api.classes.Nation;
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
-import main.App;
+import main.GenBot1;
 import utils.miscellaneous.CityLayout;
 
 
@@ -42,7 +42,7 @@ public class Cmds1 {
 			String[] args = m.getContent().split(" ");
 			CityLayout cl = null;
 			cl = new Gson().fromJson(new String(m.getAttachments().get(0).downloadAsByteArray().get()), CityLayout.class);
-			Alliance a = App.mainapi.getAlliance(args[1]);
+			Alliance a = GenBot1.mainapi.getAlliance(args[1]);
 			EmbedBuilder embed = new EmbedBuilder();
 			boolean failed = false;
 			if(a == null) {
@@ -51,10 +51,10 @@ public class Cmds1 {
 			}
 			int counter = 0;
 			for(int nid: a.member_id_list) {
-				Nation n = App.mainapi.getNation(nid+"");
+				Nation n = GenBot1.mainapi.getNation(nid+"");
 				boolean audit = true;
 				for(String cid: n.cityids) {
-					City city = App.mainapi.getCity(cid);
+					City city = GenBot1.mainapi.getCity(cid);
 					audit = cl.audit(city);
 					if(!audit) {
 						if(counter++ > 10) {

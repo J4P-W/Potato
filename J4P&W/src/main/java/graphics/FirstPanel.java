@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import main.App;
+import main.GenBot1;
 import main.Init;
 
 public class FirstPanel extends JPanel {
@@ -30,7 +30,7 @@ public class FirstPanel extends JPanel {
         setLayout (null);
         //Add Listeners
         jcomp3.addActionListener(e -> {
-			App.consolPanel();
+			GenBot1.consolPanel();
 		    Init.initialize(jcomp1.getText());
 		});
         

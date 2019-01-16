@@ -17,21 +17,21 @@ import DevPaw.api.classes.Military;
 import DevPaw.api.classes.Nation;
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
 import DevPaw.utilities.SpeedUtils;
-import main.App;
+import main.GenBot1;
 
 public class Cmds2 {
 	public static void tier(Message m) {
 		try {
 			TextChannel c = m.getChannel();
 			String[] args = m.getContent().split(" ");
-			Alliance a = App.mainapi.getAlliance(args[1]);
+			Alliance a = GenBot1.mainapi.getAlliance(args[1]);
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setColor(ColorFactory.valueOf(a.color));
 			embed.setTitle(a.name + " (" + a.acronym +")'s City tier count");
 			ArrayList<Integer> citycount = new ArrayList<>();
 			int counter = 0;
 			for(int x = 0; x < a.member_id_list.size(); x++) {
-				Nation n = App.mainapi.getNation(a.member_id_list.get(x)+"");
+				Nation n = GenBot1.mainapi.getNation(a.member_id_list.get(x)+"");
 				citycount.add(n.cities);
 				if(n.cities > counter)
 					counter = n.cities;
@@ -53,13 +53,13 @@ public class Cmds2 {
 			TextChannel c = m.getChannel();
 			Message prog = c.sendMessage("Wait up to a few minuets...").get();
 			String[] args = m.getContent().split(" ");
-			Alliance a = App.mainapi.getAlliance(args[1]);
+			Alliance a = GenBot1.mainapi.getAlliance(args[1]);
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setTitle(a.name + "(" + a.acronym + ")");
 			double avg = 0;
 			int total = 0;
 			for(int x = 0; x < a.member_id_list.size(); x++) {
-				Military milit = new Military(a.member_id_list.get(x)+"");
+				Military milit = new Military(String.valueOf(a.member_id_list.get(x)), GenBot1.mainapi);
 				if(milit.prep==-1) total--;
 				avg += milit.prep==-1?0:milit.prep;
 				total++;
@@ -87,7 +87,7 @@ public class Cmds2 {
 		try {
 			TextChannel c = m.getChannel();
 			String[] args = m.getContent().split(" ");
-			Alliance a = App.mainapi.getAlliance(args[1]);
+			Alliance a = GenBot1.mainapi.getAlliance(args[1]);
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setTitle(a.name + " (" + a.acronym + ")");
 			embed.addInlineField("Accepting members", a.accepting_members+"#");
@@ -124,8 +124,8 @@ public class Cmds2 {
 		try {
 			TextChannel c = m.getChannel();
 			String[] args = m.getContent().split(" ");
-			Nation n = App.mainapi.getNation(args[1]);
-			Military milit = new Military(n);
+			Nation n = GenBot1.mainapi.getNation(args[1]);
+			Military milit = new Military(n, GenBot1.mainapi);
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setTitle("Nation: " + n.nationid);
 			embed.addInlineField("Leader: ", n.leadername);

@@ -13,14 +13,14 @@ import DevPaw.api.classes.Nations.Nations;
 import DevPaw.api.classes.TradePrice.TradePrice;
 import DevPaw.api.classes.War.WarData;
 import DevPaw.api.exceptions.UnsuccessfullAPIException;
-import main.App;
+import main.GenBot1;
 
 public class Cmds3 {
 	public static void vms(Message m) {
 		try {
 			TextChannel c = m.getChannel();
 			String[] args = m.getContent().split(" ");
-			Nations n = App.bigapis.getNations();
+			Nations n = GenBot1.bigapis.getNations();
 			List<LNation> ns = n.nations;
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setTitle("Vacation mode people");
@@ -43,7 +43,7 @@ public class Cmds3 {
 		TextChannel c = m.getChannel();
 		String[] args = m.getContent().split(" ");
 		try {
-			WarData w = App.mainapi.getWarData(args[1]);
+			WarData w = GenBot1.mainapi.getWarData(args[1]);
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setTitle("War " + args[1]);
 			embed.setColor(Color.red);
@@ -73,17 +73,17 @@ public class Cmds3 {
 	public static void market(Message m) {
 		TextChannel c = m.getChannel();
 		EmbedBuilder embed = new EmbedBuilder();
-		TradePrice coal = App.tradeapi.getTradePrice("coal");
-		TradePrice oil = App.tradeapi.getTradePrice("oil");
-		TradePrice uranium = App.tradeapi.getTradePrice("uranium");
-		TradePrice lead = App.tradeapi.getTradePrice("lead");
-		TradePrice iron = App.tradeapi.getTradePrice("iron");
-		TradePrice bauxite = App.tradeapi.getTradePrice("bauxite");
-		TradePrice gasoline = App.tradeapi.getTradePrice("gasoline");
-		TradePrice munitions = App.tradeapi.getTradePrice("munitions");
-		TradePrice steel = App.tradeapi.getTradePrice("steel");
-		TradePrice aluminum = App.tradeapi.getTradePrice("aluminum");
-		TradePrice food = App.tradeapi.getTradePrice("food");
+		TradePrice coal = GenBot1.tradeapi.getTradePrice("coal");
+		TradePrice oil = GenBot1.tradeapi.getTradePrice("oil");
+		TradePrice uranium = GenBot1.tradeapi.getTradePrice("uranium");
+		TradePrice lead = GenBot1.tradeapi.getTradePrice("lead");
+		TradePrice iron = GenBot1.tradeapi.getTradePrice("iron");
+		TradePrice bauxite = GenBot1.tradeapi.getTradePrice("bauxite");
+		TradePrice gasoline = GenBot1.tradeapi.getTradePrice("gasoline");
+		TradePrice munitions = GenBot1.tradeapi.getTradePrice("munitions");
+		TradePrice steel = GenBot1.tradeapi.getTradePrice("steel");
+		TradePrice aluminum = GenBot1.tradeapi.getTradePrice("aluminum");
+		TradePrice food = GenBot1.tradeapi.getTradePrice("food");
 		embed.setUrl("https://politicsandwar.com/nation/trade/display=world");
 		embed.addInlineField("Coal average", coal.avgprice); embed.addInlineField("Coal best sell", coal.highestbuy.price); embed.addInlineField("Coal best buy", coal.lowestbuy.price);
 		embed.addInlineField("Oil average", oil.avgprice); embed.addInlineField("Oil best sell", oil.highestbuy.price); embed.addInlineField("Oil best buy", oil.lowestbuy.price);

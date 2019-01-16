@@ -19,7 +19,7 @@ import cmdDump.organized.Funny;
 import cmdDump.organized.Help;
 import cmdDump.organized.NationStuff;
 import cmdDump.organized.WarStuff;
-import main.App;
+import main.GenBot1;
 
 public class MessageSent implements MessageCreateListener {
 	public List<String> commands;
@@ -110,7 +110,7 @@ public class MessageSent implements MessageCreateListener {
 						CmdsPersistant.removeDefensive(m);
 					} else if (content.startsWith("j!ghostme")) {
 						Funny.ghostPingeth(m);
-					} else if (App.isAdmin(a.getIdAsString()) && content.equalsIgnoreCase("j!kill")) {
+					} else if (GenBot1.isAdmin(a.getIdAsString()) && content.equalsIgnoreCase("j!kill")) {
 						System.out.println("[" + s.getIdAsString() + "]: Kill");
 						Cmds1.kill(c);
 					}
